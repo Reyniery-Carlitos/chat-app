@@ -22,4 +22,21 @@ export default class ChatController {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
+
+  async getChatByUsersId(req = request, res = response) {
+    try {
+      const {userId, userId2} = req.query
+      const result = await chatService.getChatByUsersId({userId, userId2})
+
+      res
+      .status(result.statusCode)
+      .json({
+        message: result?.message,
+        data: result.data,
+        status: result.statusCode
+      })
+    } catch(err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
 }
